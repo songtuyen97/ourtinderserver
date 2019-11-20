@@ -17,6 +17,18 @@ router.post('/register', registerValidator, (req, res, next) => {
 // Router login.
 router.post('/login', (req, res, next) => {
   // TODO: Logic login.
+  console.log('xxx', req)
+  res.json({
+    a: 'aaa'
+  })
+});
+
+router.get('/login', (req, res, next) => {
+  // TODO: Logic login.
+  console.log('xxx', req)
+  res.json({
+    a: 'aaa'
+  })
 });
 
 module.exports = router;
