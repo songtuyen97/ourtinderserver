@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const AuthController = require('../App/Controllers/Http/AuthController');
-const { validationResult } = require('express-validator');
+const { validationResult, } = require('express-validator');
 // Validators
 const registerValidator = require('../App/Validators/registerValidator');
 
@@ -9,26 +9,20 @@ const registerValidator = require('../App/Validators/registerValidator');
 router.post('/register', registerValidator, (req, res, next) => {
 
   const errors = validationResult(req);
-  console.log(errors);
+  if (errors.isEmpty()) {
+
+  }
 
   AuthController.register({ req, res, next });
 });
 
 // Router login.
 router.post('/login', (req, res, next) => {
-  // TODO: Logic login.
-  console.log('xxx', req)
+
   res.json({
     a: 'aaa'
   })
 });
 
-router.get('/login', (req, res, next) => {
-  // TODO: Logic login.
-  console.log('xxx', req)
-  res.json({
-    a: 'aaa'
-  })
-});
 
 module.exports = router;
