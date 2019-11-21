@@ -1,26 +1,21 @@
 const AuthService = require('../../Services/AuthService');
 
 class AuthController {
-  constructor() {
-    this.authService = AuthService;
-  }
+    constructor() {
+        this.authService = AuthService;
+    }
 
-  async register({ req, res, next }) {
+    async register({req, res, next}) {
+        const {body} = req;
+        const result = await this.authService.register(body);
+        return res.json(result);
+    }
 
-
-    // Step 1
-    const { body } = req;
-
-    const result = this.authService.register(body);
-
-    console.log(result);
-
-    return res.json(result);
-  }
-
-  login() {
-
-  }
+    async login({req, res, next}) {
+        const {body} = req;
+        const result = await this.authService.login(body);
+        return res.json(result);
+    }
 }
 
 module.exports = new AuthController();

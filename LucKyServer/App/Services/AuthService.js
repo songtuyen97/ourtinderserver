@@ -10,56 +10,58 @@ class AuthService {
 
     async register(body) {
         try {
-
-            // Step 2
             if (!body.username || !body.password) {
                 return {
                     message: 'username_or_password_is_required',
                     data: null
                 };
             }
-
-            // Step 3
-            //const user = await User.findOne({username: body.username, password: body.password});
-
-            // Step 4
-            // if (user) {
-            //     return {
-            //         message: 'user_is_exist',
-            //         data: null
-            //     };
-            // }
-
-            // Step 5
-            // TODO
-            const password = body.password;
-
+            const user = await User.findOne({username: body.username, password: body.password}).exec();
+            if (user) {
+                return {
+                    message: 'user_is_exist',
+                    data: null
+                };
+            }
             const dataInsert = new User({
                 username: body.username,
                 password: body.password,
                 name: body.name,
                 avatar: body.avatar,
             });
-
             const userInserted = await dataInsert.save();
-
             let token = jwt.encode(Env.APP_KEY, {
-                id: userInserted.userId,
+                id: userInserted._id,
                 timestamp: new Date().getTime()
             });
-
             const dataTokenInsert = new Token({
-                userId: userInserted.id,
+                userId: userInserted._id,
                 value: token.value,
-                status: 1
             });
-            dataTokenInsert.save();
+            await dataTokenInsert.save();
             return {
                 message: 'register_success',
                 data: token.value
             };
         } catch (e) {
             console.log(e);
+        }
+    }
+
+    async login(body) {
+        if (!body.username || !body.password) {
+            return {
+                message: 'username_or_password_is_required',
+                data: null
+            };
+        }
+        const user = await User.findOne({username: body.username, password: body.password}).exec();
+        if (user) {
+            const token = await Token.findOne({userId: user._id}).exec();
+            return {
+                token,
+                data: null
+            };
         }
     }
 }

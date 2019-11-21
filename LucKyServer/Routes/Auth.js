@@ -1,27 +1,27 @@
 const express = require('express');
 const router = express.Router();
 const AuthController = require('../App/Controllers/Http/AuthController');
-const { validationResult, } = require('express-validator');
+const {validationResult,} = require('express-validator');
 // Validators
 const registerValidator = require('../App/Validators/registerValidator');
 
 // Router register.
 router.post('/register', registerValidator, (req, res, next) => {
 
-  const errors = validationResult(req);
-  if (errors.isEmpty()) {
+    const errors = validationResult(req);
+    if (errors.isEmpty()) {
 
-  }
-
-  AuthController.register({ req, res, next });
+    }
+    AuthController.register({req, res, next});
 });
 
 // Router login.
 router.post('/login', (req, res, next) => {
+    const errors = validationResult(req);
+    if (errors.isEmpty()) {
 
-  res.json({
-    a: 'aaa'
-  })
+    }
+    AuthController.login({req, res, next});
 });
 
 
