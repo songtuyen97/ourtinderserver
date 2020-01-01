@@ -16,7 +16,7 @@ class AuthMiddleware {
   auth({ req, res, next }) {
     const { headers } = req;
     const token = headers.authorization;
-
+    console.log('xxx', token);
     // Check token is exist.
     if(!token) {
       return next({

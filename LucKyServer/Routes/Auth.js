@@ -17,10 +17,6 @@ router.post('/register', registerValidator, (req, res, next) => {
 
 // Router login.
 router.post('/login', (req, res, next) => {
-    const errors = validationResult(req);
-    if (errors.isEmpty()) {
-
-    }
     AuthController.login({req, res, next});
 });
 
